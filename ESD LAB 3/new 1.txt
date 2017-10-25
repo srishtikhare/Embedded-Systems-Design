@@ -1,0 +1,507 @@
+/* ========================================
+ *
+ * Copyright YOUR COMPANY, THE YEAR
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF your company.
+ *
+ * ========================================
+*/
+#include <project.h>
+#include <stdio.h>
+#include<stdlib.h>
+
+#define TOGGLE_EPIN                      \
+                        do               \
+                        {                \
+                            CyDelay(20); \
+                            E_Write(1);  \
+                            CyDelay(5);  \
+                            E_Write(0);  \
+                            CyDelay(5);  \
+                        }while(0)
+                            
+                        
+#define InitPins                           \
+                        do                 \
+                        {                  \
+                            DB7_Write(0);  \
+                            DB6_Write(0);  \
+                            DB5_Write(0);  \
+                            DB4_Write(0);  \
+                            DB3_Write(0);  \
+                            DB2_Write(0);  \
+                            DB1_Write(0);  \
+                            DB0_Write(0);  \
+                        }while(0)
+                            
+#define NewLine                            \
+                        do                 \
+                        {                  \
+                            RS_Write(0);   \
+                            RW_Write(0);   \
+                            DB7_Write(1);  \
+                            DB6_Write(1);  \
+                            DB5_Write(0);  \
+                            DB4_Write(0);  \
+                            DB3_Write(0);  \
+                            DB2_Write(0);  \
+                            DB1_Write(0);  \
+                            DB0_Write(0);  \
+                            TOGGLE_EPIN;   \
+                        }while(0)
+                            
+#define ClearDisplay                       \
+                        do                 \
+                        {                  \
+                            RS_Write(0);   \
+                            RW_Write(0);   \
+                            DB7_Write(0);  \
+                            DB6_Write(0);  \
+                            DB5_Write(0);  \
+                            DB4_Write(0);  \
+                            DB3_Write(0);  \
+                            DB2_Write(0);  \
+                            DB1_Write(0);  \
+                            DB0_Write(1);  \
+                            TOGGLE_EPIN;   \
+                        }while(0)
+
+void LCDInit(void)
+{
+   E_Write(0);
+    
+    CyDelay(100);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(1);
+    DB4_Write(1);
+    DB3_Write(0);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+        
+    CyDelay(5);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(1);
+    DB4_Write(1);
+    DB3_Write(0);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+
+    CyDelayUs(100);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(1);
+    DB4_Write(1);
+    DB3_Write(0);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;   
+
+
+    CyDelay(5);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(1);
+    DB4_Write(1);
+    DB3_Write(1);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+    
+    //Display off    
+    CyDelay(5);    
+
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(0);
+    DB4_Write(0);
+    DB3_Write(1);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+    
+    //Display clear
+    CyDelay(5);    
+
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(0);
+    DB4_Write(0);
+    DB3_Write(0);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(1);
+    TOGGLE_EPIN;
+    
+    //Entry mode set    
+    CyDelay(5);    
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(0);
+    DB4_Write(0);
+    DB3_Write(0);
+    DB2_Write(1);
+    DB1_Write(1);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+    
+    //OPERATION
+    
+// Function Set   
+    CyDelay(100);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(1);
+    DB4_Write(1);
+    DB3_Write(1);
+    DB2_Write(0);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+    
+ // Display on/off control   
+    CyDelay(100);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(0);
+    DB4_Write(0);
+    DB3_Write(1);
+    DB2_Write(1);
+    DB1_Write(0);
+    DB0_Write(0);
+    TOGGLE_EPIN;
+    
+ // Entry mode set
+    CyDelay(100);
+    
+    RS_Write(0);
+    RW_Write(0);
+    DB7_Write(0);
+    DB6_Write(0);
+    DB5_Write(0);
+    DB4_Write(0);
+    DB3_Write(0);
+    DB2_Write(1);
+    DB1_Write(1);
+    DB0_Write(0);
+    TOGGLE_EPIN;    
+}
+    
+void ShowOnLCD(uint8_t value);
+    
+void StringOnLCD(char *str)
+{
+    uint8_t i,j=0,val,value[33];
+
+    for(i=0;str[i] != '\0';i++)
+    {
+        value[j] = str[i];
+        j++;
+    }
+    
+   for(i=0;i<j;i++)
+    {
+        val = value[i];
+        
+        ShowOnLCD(val);
+    }
+}
+    
+void ShowOnLCD(uint8_t value)
+{
+ 
+    InitPins;
+    
+    CyDelay(5);
+    
+    RS_Write(1);
+    RW_Write(0);
+    
+    if(value & 0x80)
+    {
+        DB7_Write(1);
+    }
+    
+    if(value & 0x40)
+    {
+        DB6_Write(1);
+    }
+    
+    if(value & 0x20)
+    {
+        DB5_Write(1);
+    }
+    
+    if(value & 0x10)
+    {
+        DB4_Write(1);
+    }
+    
+    if(value & 0x08)
+    {
+        DB3_Write(1);
+    }
+    
+    if(value & 0x04)
+    {
+        DB2_Write(1);
+    }
+    
+    if(value & 0x02)
+    {
+        DB1_Write(1);
+    }
+    
+    if(value & 0x01)
+    {
+        DB0_Write(1);
+    } 
+    TOGGLE_EPIN;
+}
+
+int main()
+{
+    uint8_t sec,i=0;
+    char outStrsec[3];
+    
+    uint8_t min=0,hour=0;
+    char outStrmin[3],outStrhour[3],outDD[4],outMM[4],outYY[4];
+    char* day[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+    int dd=11,mm=4,yy=2016;
+    
+    Timer_1_Start();
+    
+    CyGlobalIntEnable; /* Enable global interrupts. */
+    
+    //INITIALIZATION
+    
+    LCDInit();
+    ClearDisplay;
+   
+    
+    sec = 0;
+    
+    while(1)
+    {
+        //CyDelay(1000);
+        
+        while(Timer_1_ReadCounter() % 1000 !=0)
+        {
+        }
+                
+        {
+            sec = sec+1;
+               if(sec > 59)
+            {
+                min = min+1;
+                sec =0;
+                if(min > 59)
+                {
+                    hour = hour + 1;
+                    min=0;
+                    if(hour > 23)
+                    {
+                        i++;
+                        hour=0;
+                        dd++;
+                        if(dd>31)
+                        {
+                            mm++;
+                            dd=1;
+                            if(mm>12)
+                            {
+                                yy++;
+                                mm=1;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            //print hours
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(0);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(0);
+            DB2_Write(0);
+            DB1_Write(0);
+            DB0_Write(0);
+            TOGGLE_EPIN;
+            
+            sprintf(outStrhour,"%02u",hour);
+            StringOnLCD(outStrhour);
+            
+            //print :
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(0);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(0);
+            DB2_Write(0);
+            DB1_Write(1);
+            DB0_Write(0);
+            TOGGLE_EPIN;
+            
+            ShowOnLCD(':');
+            
+            //print mins
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(0);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(0);
+            DB2_Write(0);
+            DB1_Write(1);
+            DB0_Write(1);
+            TOGGLE_EPIN;
+            
+            sprintf(outStrmin,"%02u",min);
+            StringOnLCD(outStrmin);
+            
+            //print :
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(0);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(0);
+            DB2_Write(1);
+            DB1_Write(0);
+            DB0_Write(1);
+            TOGGLE_EPIN;
+            
+            ShowOnLCD(':');
+            
+            //print seconds
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(0);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(0);
+            DB2_Write(1);
+            DB1_Write(1);
+            DB0_Write(0);
+            TOGGLE_EPIN;
+            
+            sprintf(outStrsec,"%02u",sec);
+            
+            StringOnLCD(outStrsec);
+            
+            //print day
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(0);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(1);
+            DB2_Write(0);
+            DB1_Write(0);
+            DB0_Write(1);
+            TOGGLE_EPIN;
+            
+            StringOnLCD(day[i]);
+            
+            //Bring cursor to next line
+            RS_Write(0);      // set address
+            RW_Write(0);
+            DB7_Write(1);
+            DB6_Write(1);
+            DB5_Write(0);
+            DB4_Write(0);
+            DB3_Write(0);
+            DB2_Write(0);
+            DB1_Write(0);
+            DB0_Write(0);
+            TOGGLE_EPIN;
+            
+            sprintf(outDD,"%02u",dd);  //DD
+            StringOnLCD(outDD);
+            
+            //print -
+            RS_Write(1);
+            RW_Write(0);
+            DB7_Write(0);
+            DB6_Write(0);
+            DB5_Write(1);
+            DB4_Write(0);
+            DB3_Write(1);
+            DB2_Write(1);
+            DB1_Write(0);
+            DB0_Write(1);
+            TOGGLE_EPIN;
+            
+            sprintf(outMM,"%02u",mm);  //MM
+            StringOnLCD(outMM);
+            
+            //print -
+            RS_Write(1);
+            RW_Write(0);
+            DB7_Write(0);
+            DB6_Write(0);
+            DB5_Write(1);
+            DB4_Write(0);
+            DB3_Write(1);
+            DB2_Write(1);
+            DB1_Write(0);
+            DB0_Write(1);
+            TOGGLE_EPIN;
+            
+            sprintf(outYY,"%04u",yy);  //YY
+            StringOnLCD(outYY);
+            
+            //ShowOnLCD('A');
+            //ShowOnLCD('A');
+            
+            
+        }     
+    }
+}
+
+/* [] END OF FILE */

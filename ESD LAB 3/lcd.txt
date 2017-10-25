@@ -1,0 +1,384 @@
+#include <at89c51ed2.h>
+#include <mcs51reg.h>
+#include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+void Delay(int n)
+{
+    int i;
+    int j = 922*n;
+
+    for(i=0;i<=j;i++);
+}
+
+void TOGGLE_EPIN(void)
+{
+    Delay(20);
+    P1 = 0x40;
+    Delay(5);
+    P1 = 0x00;
+    Delay(5);
+
+}
+
+void InitPins(void)
+{
+    P0 = 0x00;
+}
+
+void NewLine(void)
+{
+    P1 &= 0xCF;
+    P0 = 0xC0;
+    TOGGLE_EPIN();
+}
+
+void ClearDisplay(void)
+{
+    P1 &= 0xCF;
+    P0 = 0x01;
+    TOGGLE_EPIN();
+}
+
+void LCDInit(void)
+{
+    P1 &= 0xBF;
+
+    Delay(100);
+
+    P1 &= 0xCF;
+    P0 = 0x30;
+    TOGGLE_EPIN();
+
+    Delay(5);
+
+    P1 &=0xCF;
+    P0 = 0x30;
+    TOGGLE_EPIN();
+
+    Delay(5);
+
+    P1 &= 0xCF;
+    P0 = 0x30;
+    TOGGLE_EPIN();
+
+    Delay(5);
+
+    P1 &= 0xCF;
+    P0 = 0x38;
+    TOGGLE_EPIN();
+
+    Delay(5);
+
+    P1 &= 0xCF;
+    P0 = 0x08;
+    TOGGLE_EPIN();
+
+    Delay(5);
+
+    P1 &= 0xCF;
+    P0 = 0x01;
+    TOGGLE_EPIN();
+
+    Delay(5);
+
+    P1 &= 0xCF;
+    P0 = 0x06;
+    TOGGLE_EPIN();
+
+    //OPERATION
+
+    Delay(100);
+
+    P1 &= 0xCF;
+    P0 = 0x38;
+    TOGGLE_EPIN();
+
+    Delay(100);
+
+    P1 &= 0xCF;
+    P0 = 0xC0;
+    TOGGLE_EPIN();
+
+    Delay(100);
+
+    P1 &= 0xCF;
+    P0 = 0x06;
+    TOGGLE_EPIN();
+}
+
+void ShowOnLCD(uint8_t value);
+
+void StringOnLCD(char *str)
+{
+    uint8_t i,j=0,val,value[33];
+
+    for(i=0;str[i] != '\0';i++)
+    {
+        value[j] = str[i];
+        j++;
+    }
+
+   for(i=0;i<j;i++)
+    {
+        val = value[i];
+
+        ShowOnLCD(val);
+    }
+}
+
+void ShowOnLCD(uint8_t value)
+{
+
+    InitPins();
+
+    Delay(5);
+
+    P1 |= 0x10;
+
+    if(value & 0x80)
+    {
+        P0 = 0x80;
+    }
+
+    if(value & 0x40)
+    {
+        P0 = 0x40;
+    }
+
+    if(value & 0x20)
+    {
+        P0 = 0x20;
+    }
+
+    if(value & 0x10)
+    {
+        P0 = 0x10;
+    }
+
+    if(value & 0x08)
+    {
+        P0 = 0x08;
+    }
+
+    if(value & 0x04)
+    {
+        P0 = 0x04;
+    }
+
+    if(value & 0x02)
+    {
+        P0 = 0x02;
+    }
+
+    if(value & 0x01)
+    {
+        P0 = 0x01;
+    }
+    TOGGLE_EPIN();
+}
+
+int main()
+{
+//    uint8_t sec,i=0;
+//    char outStrsec[3];
+//
+//    uint8_t min=0,hour=0;
+//    char outStrmin[3],outStrhour[3],outDD[4],outMM[4],outYY[4];
+//    char* day[] = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+//    int dd=11,mm=4,yy=2016;
+
+//    Timer_1_Start();
+
+//    CyGlobalIntEnable; /* Enable global interrupts. */
+
+    //INITIALIZATION
+
+    LCDInit();
+    ClearDisplay();
+
+
+ //   sec = 0;
+
+    while(1)
+    {
+        //CyDelay(1000);
+
+//        while(Timer_1_ReadCounter() % 1000 !=0)
+//        {
+//        }
+//
+//        {
+//            sec = sec+1;
+//               if(sec > 59)
+//            {
+//                min = min+1;
+//                sec =0;
+//                if(min > 59)
+//                {
+//                    hour = hour + 1;
+//                    min=0;
+//                    if(hour > 23)
+//                    {
+//                        i++;
+//                        hour=0;
+//                        dd++;
+//                        if(dd>31)
+//                        {
+//                            mm++;
+//                            dd=1;
+//                            if(mm>12)
+//                            {
+//                                yy++;
+//                                mm=1;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+
+          //  P1 &= 0xCF; // set address
+          //  P0 = 0x80;
+          //  TOGGLE_EPIN();
+            ShowOnLCD(0x41);
+
+//            sprintf(outStrhour,"%02u",hour);
+//            StringOnLCD(outStrhour);
+//
+//            //print :
+//            RS_Write(0);      // set address
+//            RW_Write(0);
+//            DB7_Write(1);
+//            DB6_Write(0);
+//            DB5_Write(0);
+//            DB4_Write(0);
+//            DB3_Write(0);
+//            DB2_Write(0);
+//            DB1_Write(1);
+//            DB0_Write(0);
+//            TOGGLE_EPIN;
+//
+//            ShowOnLCD(':');
+//
+//            //print mins
+//            RS_Write(0);      // set address
+//            RW_Write(0);
+//            DB7_Write(1);
+//            DB6_Write(0);
+//            DB5_Write(0);
+//            DB4_Write(0);
+//            DB3_Write(0);
+//            DB2_Write(0);
+//            DB1_Write(1);
+//            DB0_Write(1);
+//            TOGGLE_EPIN;
+//
+//            sprintf(outStrmin,"%02u",min);
+//            StringOnLCD(outStrmin);
+//
+//            //print :
+//            RS_Write(0);      // set address
+//            RW_Write(0);
+//            DB7_Write(1);
+//            DB6_Write(0);
+//            DB5_Write(0);
+//            DB4_Write(0);
+//            DB3_Write(0);
+//            DB2_Write(1);
+//            DB1_Write(0);
+//            DB0_Write(1);
+//            TOGGLE_EPIN;
+//
+//            ShowOnLCD(':');
+//
+//            //print seconds
+//            RS_Write(0);      // set address
+//            RW_Write(0);
+//            DB7_Write(1);
+//            DB6_Write(0);
+//            DB5_Write(0);
+//            DB4_Write(0);
+//            DB3_Write(0);
+//            DB2_Write(1);
+//            DB1_Write(1);
+//            DB0_Write(0);
+//            TOGGLE_EPIN;
+//
+//            sprintf(outStrsec,"%02u",sec);
+//
+//            StringOnLCD(outStrsec);
+//
+//            //print day
+//            RS_Write(0);      // set address
+//            RW_Write(0);
+//            DB7_Write(1);
+//            DB6_Write(0);
+//            DB5_Write(0);
+//            DB4_Write(0);
+//            DB3_Write(1);
+//            DB2_Write(0);
+//            DB1_Write(0);
+//            DB0_Write(1);
+//            TOGGLE_EPIN;
+//
+//            StringOnLCD(day[i]);
+
+            //Bring cursor to next line
+//            RS_Write(0);      // set address
+//            RW_Write(0);
+//            DB7_Write(1);
+//            DB6_Write(1);
+//            DB5_Write(0);
+//            DB4_Write(0);
+//            DB3_Write(0);
+//            DB2_Write(0);
+//            DB1_Write(0);
+//            DB0_Write(0);
+//            TOGGLE_EPIN;
+            P1 &= 0xCF; // set address
+            P0 = 0xC0;
+            TOGGLE_EPIN();
+
+//            sprintf(outDD,"%02u",dd);  //DD
+//            StringOnLCD(outDD);
+//
+//            //print -
+//            RS_Write(1);
+//            RW_Write(0);
+//            DB7_Write(0);
+//            DB6_Write(0);
+//            DB5_Write(1);
+//            DB4_Write(0);
+//            DB3_Write(1);
+//            DB2_Write(1);
+//            DB1_Write(0);
+//            DB0_Write(1);
+//            TOGGLE_EPIN;
+//
+//            sprintf(outMM,"%02u",mm);  //MM
+//            StringOnLCD(outMM);
+//
+//            //print -
+//            RS_Write(1);
+//            RW_Write(0);
+//            DB7_Write(0);
+//            DB6_Write(0);
+//            DB5_Write(1);
+//            DB4_Write(0);
+//            DB3_Write(1);
+//            DB2_Write(1);
+//            DB1_Write(0);
+//            DB0_Write(1);
+//            TOGGLE_EPIN;
+//
+//            sprintf(outYY,"%04u",yy);  //YY
+//            StringOnLCD(outYY);
+
+            ShowOnLCD(0x42);
+            //ShowOnLCD('A');
+
+
+    }
+}
